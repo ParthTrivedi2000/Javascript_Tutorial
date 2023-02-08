@@ -500,7 +500,7 @@ can also use new JS features.
 
 // Example - 1):-
 // 0 se 9 
-// dry don't repeat yourself
+// dry: don't repeat yourself
 // let i = 0; // 1 2 3 4
 // while(i<=9){
 //     console.log(i);
@@ -688,6 +688,8 @@ can also use new JS features.
 
 // Note :- push/pop are faster than shift/unshift.
 
+// array.includes(item) :- will return true if item or element presents in the array.
+
 
 
 
@@ -703,6 +705,15 @@ can also use new JS features.
 // console.log("after incrementing num1")
 // console.log("value of num1 is", num1);
 // console.log("value of num2 is", num2);
+// So now afer incrementing num1, result of num1 = 7 and num2 = 6 (here iin above case). So
+// this thing you must note bec we have used primitive datatype. so for any primitive 
+// datatype if 2 variables are pointing to same value then after changing any of those variables,
+// it won't affect the value stored in other variable. why? 
+
+// Primitive datatype is stored in stack. bec wo jyada jgh nh lete so. now when we write
+// num1 = 4, 4 will be stored inside the stack. then whenver we write num2 = num1, then
+// again in stack num2 = 4 will be created and seperately memory is used for that variable in stack.
+
 
 
 // reference types :-
@@ -716,7 +727,18 @@ can also use new JS features.
 // console.log("array1", array1);
 // console.log("array2", array2);
 
+// So we have done same thing as above for reference type. Now we are printing output, then 
+// arra1 and arra2 will show the same output. it means item3 will be added to both arr1 and arr2.
+// So why?
 
+// So pls understand this, in case of reference type, the values will be stored in the heap
+// memory and pointer (i.e. arr1 and arr2 (not values, bec values are stored inside heap)) are
+// stored in the stack memory. pointer will store the address of the value of the element which
+// is in the heap memory. so wht happens is, the value ["item1","item2"] is stored and it's
+// address 0x11 is stored in the stack pointed by array1. now when line arry2 = array1 is 
+// executed, at that time array2 is created inside the stack and value stored in array2 is also
+// 0x11. so if we make change in any of the variable array1 or array2 then it will make change
+// in both the variable values.
 
 
 
@@ -724,18 +746,36 @@ can also use new JS features.
 // how to clone array 
 // how to concatenate two arrays
 
+// So as we have seen above, in case of reference type, jst by writing array1=array2 will not
+// at all create new arrray so how to create copy of array or how to clone it? 
+
+// Method - 1) bt this is applicable with small arrays only. bec it is not feasible or not easy to copy
+// 100 items array or 1000 items array with this method.
 // let array1 = ["item1", "item2"];
 // let array2 = ["item1", "item2"];
+// console.log(array1===arry2); // o/p:- false. bec 2 seperate array was created hence.
+// array1.push("item3");
+// console.log(array1);
+// console.log(array2);
+
+// Methd -2) use of slice. u can use slice method to create new array.
+// let array2 = array1.slice(0);
 // let array2 = array1.slice(0).concat(["item3", "item4"]);
+
+// Method - 3) using [] and concate method
 // let array2 = [].concat(array1,["item3", "item4"]);
+// [] will create new array and concate elemets.
 
 
-
-
+// Method - 4) Using spread operator.
 // ** Spread operator**.        (V. Imp)
 // Plse watch this topic timestamp from video and make note of it.
 // new way 
 // spread operator
+// jst write ... and arrayName will copy the array's element into the new array and give it back.
+// For example:-
+// let array2 = [...array1];
+
 // let oneMoreArray = ["item3", "item4"]
 // let array2 = [...array1, ...oneMoreArray];
 // array1.push("item3");
@@ -768,12 +808,17 @@ can also use new JS features.
 
 // **Use const to create array** ( v. Imp)
 
+// const num = 12;
+// num = 20; // o/p:- will give error as value of constsnts can not be changed.
+
 // heap memory ["apple", "mango"] 0x11
 
 // const fruits = ["apple", "mango"]; // 0x11
-// fruits.push("banana");
+// fruits.push("banana"); // o/p:- will not give error. bt instead it will push the new element
+// to the array.
 // console.log(fruits);
 
+// So how it works?
 
 
 
@@ -965,8 +1010,15 @@ can also use new JS features.
 //   };
   
   // const newObject = { ...obj2, ...obj1, key69: "value69" };
+  // in case of objects, Spread krte time agr same key dusri bar aa rhi he to most updated value
+  // finally present hogi. it means in above case key1 is present in obj2 and obj1 as well. and
+  // hmne spread krte time obj2 ke bad obj1 likha he. so obj1 ke key1 ki value finally present hogi.
+
   // const newObject = { ...["item1", "item2"] };
   // const newObject = { ..."abcdefghijklmnopqrstuvwxyz" };
+  // agr hmmne spread krte time koi bhi pura object specify nhi kiya he it means keys specify nhi
+  // ki he sirf values hi specify ki he, in that case JS will take from 0 onwards sequence as keys.
+  // as shown in above both example. jst try to run it and check.
   // console.log(newObject);
 
 
@@ -984,6 +1036,7 @@ can also use new JS features.
 //   };
   
 //   let { bandName, famousSong, ...restProps } = band;
+// let { bandName, famousSong, ...restProps } = band;
 //   console.log(bandName);
 //   console.log(restProps);
 
